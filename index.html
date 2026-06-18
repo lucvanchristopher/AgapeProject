@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+<title>Sakafo AGAPE</title>
+<meta name="description" content="Suivi du projet Sakafo AGAPE : tâches, achats, matériels et contacts." />
+
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,600;9..144,700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
+
+<link rel="stylesheet" href="style.css" />
+</head>
+
+<body>
+
+<noscript>
+  <p style="padding:2rem;font-family:sans-serif;">
+    Sakafo AGAPE a besoin de JavaScript pour fonctionner. Merci de l'activer dans ton navigateur.
+  </p>
+</noscript>
+
+<div id="toast" class="toast" role="status" aria-live="polite" hidden></div>
+
+<!-- ===================== ÉCRAN : CONNEXION ===================== -->
+<section id="ecran-connexion" class="ecran ecran-centree">
+  <div class="motif-fond" aria-hidden="true"></div>
+
+  <div class="carte-connexion">
+    <p class="eyebrow">Sakafo AGAPE</p>
+    <h1 class="titre-app">Un repas, préparé ensemble</h1>
+    <p class="sous-titre">
+      Retrouve tes tâches, tes achats, ton matériel et les contacts à suivre.
+    </p>
+
+    <form id="formulaire-connexion" novalidate>
+      <label for="champ-email">Ton adresse email</label>
+      <input
+        type="email"
+        id="champ-email"
+        name="email"
+        placeholder="prenom@exemple.com"
+        autocomplete="email"
+        required
+      />
+
+      <label class="case-souvenir">
+        <input type="checkbox" id="case-se-souvenir" checked />
+        <span>Se souvenir de moi sur cet appareil</span>
+      </label>
+
+      <button type="submit" class="bouton bouton-primaire bouton-large" id="bouton-connexion">
+        <span class="bouton-texte">Continuer</span>
+      </button>
+
+      <p class="message-erreur" id="erreur-connexion" role="alert" hidden></p>
+    </form>
+  </div>
+</section>
+
+<!-- ===================== ÉCRAN : CHOIX DE VUE ===================== -->
+<section id="ecran-choix" class="ecran ecran-centree" hidden>
+  <div class="motif-fond" aria-hidden="true"></div>
+
+  <div class="carte-connexion">
+    <p class="eyebrow" id="choix-bonjour">Bonjour</p>
+    <h1 class="titre-app titre-app--petit">Que veux-tu consulter ?</h1>
+
+    <div class="boutons-choix">
+      <button type="button" class="bouton-choix bouton-choix--primaire" id="bouton-voir-tout">
+        <span class="bouton-choix__titre">Voir la totalité</span>
+        <span class="bouton-choix__sous-texte">Pilotage complet du projet</span>
+      </button>
+
+      <button type="button" class="bouton-choix" id="bouton-voir-mes-taches">
+        <span class="bouton-choix__titre">Voir mes responsabilités</span>
+        <span class="bouton-choix__sous-texte">Uniquement ce qui me concerne</span>
+      </button>
+    </div>
+  </div>
+</section>
+
+<!-- ===================== EN-TÊTE APP ===================== -->
+<header id="entete-app" class="entete-app" hidden>
+  <div class="entete-app__haut">
+    <p class="entete-app__marque">Sakafo AGAPE</p>
+
+    <div class="entete-app__actions">
+      <span id="badge-utilisateur" class="badge-utilisateur"></span>
+      <button type="button" id="bouton-changer-vue" class="lien-discret" hidden>Changer de vue</button>
+      <button type="button" id="bouton-deconnexion" class="lien-discret">Déconnexion</button>
+    </div>
+  </div>
+</header>
+
+<!-- ===================== VUE INDIVIDUELLE ===================== -->
+<main id="vue-individuelle" class="ecran" hidden>
+  <div class="conteneur">
+    <section class="bloc-entete">
+      <p class="eyebrow">Mes responsabilités</p>
+      <h1 id="individuel-salutation" class="titre-section">Bonjour</h1>
+      <p class="individuel-intro">
+        Voici ce qui te concerne pour le Sakafo AGAPE. Mets à jour le statut et ajoute un commentaire si besoin.
+      </p>
+    </section>
+
+    <div class="divider-signature" aria-hidden="true"></div>
+
+    <section class="resume-cartes" id="individuel-resume"></section>
+
+    <section class="bloc-liste" id="bloc-mes-taches" hidden>
+      <h2 class="titre-bloc">Mes tâches</h2>
+      <div class="liste-cartes" id="individuel-taches"></div>
+    </section>
+
+    <section class="bloc-liste" id="bloc-mes-achats" hidden>
+      <h2 class="titre-bloc">Mes achats</h2>
+      <div class="liste-cartes" id="individuel-achats"></div>
+    </section>
+
+    <section class="bloc-liste" id="bloc-mes-materiels" hidden>
+      <h2 class="titre-bloc">Mon matériel</h2>
+      <div class="liste-cartes" id="individuel-materiels"></div>
+    </section>
+
+    <section class="bloc-liste" id="bloc-mes-contacts" hidden>
+      <h2 class="titre-bloc">Mes contacts à appeler</h2>
+      <div class="liste-cartes" id="individuel-contacts"></div>
+    </section>
+
+    <section class="bloc-liste" id="bloc-mes-equipes" hidden>
+      <h2 class="titre-bloc">Mes équipes</h2>
+      <div class="liste-cartes" id="individuel-equipes"></div>
+    </section>
+
+    <section class="bloc-liste" id="bloc-mon-jourj" hidden>
+      <h2 class="titre-bloc">Mon planning du jour J</h2>
+      <div class="liste-cartes" id="individuel-jourj"></div>
+    </section>
+
+    <section class="bloc-liste" id="bloc-mes-risques" hidden>
+      <h2 class="titre-bloc">Risques dont je suis responsable</h2>
+      <div class="liste-cartes" id="individuel-risques"></div>
+    </section>
+
+    <p class="etat-vide" id="individuel-rien-a-faire" hidden>
+      Rien ne t'est assigné pour le moment.
+    </p>
+  </div>
+</main>
+
+<!-- ===================== VUE GLOBALE ===================== -->
+<main id="vue-globale" class="ecran" hidden>
+  <nav class="onglets" id="onglets-globaux" aria-label="Sections du projet"></nav>
+
+  <div class="conteneur">
+    <div id="contenu-onglet"></div>
+  </div>
+</main>
+
+<!-- ===================== MODALE : RELANCE ===================== -->
+<div id="modale-relance" class="modale" hidden>
+  <div class="modale__fond" id="modale-relance-fond"></div>
+
+  <div class="modale__contenu" role="dialog" aria-modal="true" aria-labelledby="modale-relance-titre">
+    <h2 id="modale-relance-titre">Envoyer une relance</h2>
+    <p id="modale-relance-destinataire" class="modale-meta"></p>
+
+    <label for="modale-relance-message">Message</label>
+    <textarea id="modale-relance-message" rows="8"></textarea>
+
+    <p class="message-erreur" id="modale-relance-erreur" role="alert" hidden></p>
+
+    <div class="modale__actions">
+      <button type="button" class="bouton bouton-fantome" id="modale-relance-annuler">Annuler</button>
+      <button type="button" class="bouton bouton-primaire" id="modale-relance-envoyer">Envoyer la relance</button>
+    </div>
+  </div>
+</div>
+
+<!-- ===================== CHARGEMENT GLOBAL ===================== -->
+<div id="chargement-global" class="chargement-overlay" hidden>
+  <div class="chargement">
+    <div class="chargement__spinner"></div>
+    <p>Chargement...</p>
+  </div>
+</div>
+
+<script src="api.js"></script>
+<script src="app.js"></script>
+</body>
+</html>
